@@ -1,0 +1,28 @@
+# Dependency directories
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local environment secrets & configs
+.env
+.env.local
+.env.development
+.env.production
+*.env
+
+# App storage & temporary directories
+downloads/
+vector_db/
+chroma_db/
+logs/
+*.log
+
+# Build files
+dist/
+build/
+.eslintcache
+.DS_Store
+.idea/
+.vscode/
