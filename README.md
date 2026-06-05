@@ -115,4 +115,14 @@ The user interface will run on `http://localhost:5173`.
 
 ## 🔒 Security & Git Configuration
 
-Sensitive configurations, environment files (`.env`), database cache files (`vector_db/`, `chroma_db/`), and dependency folders (`node_modules/`, `.venv/`) are excluded from repository tracking via the root `.gitignore` file. Always copy the `.env.example` templates and populate them locally.
+Sensitive files, environment parameters, local databases, and temporary caches are securely ignored from repository tracking via the root `.gitignore`. This includes:
+*   **Secrets & Credentials**: `.env`, `.env.local`, `*.key`, `*.pem`, `credentials.json`, and any other local environment files.
+*   **Dependency Directories**: `node_modules/`, `.venv/`, `venv/`, and Python/Node environment caches.
+*   **Database & App Cache Storage**: Local directories such as `downloads/`, `vector_db/`, `chroma_db/`, and generated logs (`*.log`).
+*   **Build Artifacts**: Production build outputs (`dist/`, `build/`, `out/`, etc.) and IDE configurations (`.vscode/`, `.idea/`).
+
+Ensure `.env` templates (like `AI_Service/.env` or `Backend/.env`) are populated manually on deployment platforms (e.g., Render, Railway) as environment variables, and never committed to version control.
+
+### 🐧 Cross-Platform & Deployment Compatibility Note
+To ensure seamless deployment on case-sensitive filesystems (such as Linux containers on Render or AWS), module imports in the Node.js backend must match the file capitalization exactly (e.g., importing `User.js` from `../models/User.js` rather than `user.js`). This has been configured and verified across the backend controllers and middleware.
+
