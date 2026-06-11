@@ -56,12 +56,13 @@ def run_pipeline(
         )
     )
 
-    rag_chain = (
-        build_rag_chain(
-            transcript,
-            collection_name
-        )
-    )
+    # rag_chain = (
+    #     build_rag_chain(
+    #         transcript,
+    #         collection_name
+    #     )
+    # )
+    rag_chain = None
 
     return {
         "title": title,
