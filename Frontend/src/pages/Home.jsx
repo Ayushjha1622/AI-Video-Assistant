@@ -17,7 +17,7 @@ export default function Home({ onLogin }) {
     try {
       const endpoint = isLogin ? "/api/auth/login" : "/api/auth/register";
       const payload = isLogin ? { email, password } : { name, email, password };
-      const response = await axios.post(`http://localhost:5000${endpoint}`, payload);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, payload);
 
       if (response.data && response.data.token) {
         onLogin(response.data.token, response.data.user);

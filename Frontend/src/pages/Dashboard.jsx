@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   const fetchRecentAnalyses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/analysis", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/analysis`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRecentAnalyses(response.data);
@@ -36,7 +36,7 @@ export default function Dashboard() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/analysis",
+        `${import.meta.env.VITE_API_URL}/api/analysis`,
         { videoUrl, language },
         { headers: { Authorization: `Bearer ${token}` } }
       );

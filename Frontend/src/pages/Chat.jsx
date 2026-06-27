@@ -31,7 +31,7 @@ export default function Chat() {
 
   const fetchAnalysisDetails = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/analysis/${analysisId}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/analysis/${analysisId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAnalysisTitle(response.data.title);
@@ -44,8 +44,8 @@ export default function Chat() {
     try {
       setSessionsLoading(true);
       const url = analysisId
-        ? `http://localhost:5000/api/chat/sessions?analysisId=${analysisId}`
-        : "http://localhost:5000/api/chat/sessions";
+        ? `${import.meta.env.VITE_API_URL}/api/chat/sessions?analysisId=${analysisId}`
+        : `${import.meta.env.VITE_API_URL}/api/chat/sessions`;
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -68,7 +68,7 @@ export default function Chat() {
   const handleSelectSession = async (session) => {
     setActiveSession(session);
     try {
-      const response = await axios.get(`http://localhost:5000/api/chat/messages/${session._id}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/chat/messages/${session._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessages(response.data);
@@ -81,7 +81,7 @@ export default function Chat() {
     if (!analysisId) return;
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/chat/session",
+        `${import.meta.env.VITE_API_URL}/api/chat/session`,
         { analysisId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -106,7 +106,7 @@ export default function Chat() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/chat/message",
+        `${import.meta.env.VITE_API_URL}/api/chat/message`,
         { chatSessionId: activeSession._id, message },
         { headers: { Authorization: `Bearer ${token}` } }
       );

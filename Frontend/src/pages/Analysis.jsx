@@ -19,7 +19,7 @@ export default function Analysis() {
   const fetchAnalysis = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/analysis/${id}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/analysis/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAnalysis(response.data);
