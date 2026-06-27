@@ -11,6 +11,11 @@ app.use(cors());
 
 app.use(express.json());
 
+// Add a root route so the deployed URL doesn't show "Cannot GET /"
+app.get("/", (req, res) => {
+  res.json({ message: "AI Video Assistant Backend is running!" });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/analysis", analysisRoutes);
 app.use("/api/chat", chatRoutes);
