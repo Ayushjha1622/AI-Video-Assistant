@@ -1,0 +1,55 @@
+# ── docker-compose.yml — AI_Service ─────────────────────────────────────────────
+# Run: docker compose up --build
+# Stop: docker compose down
+
+services:
+  ai_service:
+    build:
+      context: .          # Build from AI_Service/ directory (where Dockerfile lives)
+      dockerfile: Dockerfile
+
+    container_name: ai_video_assistant
+
+    # ── Port mapping ──────────────────────────────────────────────────────────
+    ports:
+      - "8001:8000"       # host:container  →  http://localhost:8001
+
+    # ── Environment variables ─────────────────────────────────────────────────
+    # Reads from .env file at runtime (keys are NEVER baked into the image)
+    env_file:
+      - .env
+
+    # ── Persistent volumes ────────────────────────────────────────────────────
+    # downloads/ : yt-dlp and audio files created at runtime
+    # vector_db/ : ChromaDB persisted embeddings
+    volumes:
+      - ai_downloads:/app/downloads
+      - ai_vector_db:/app/vector_db
+
+    # ── Restart policy ────────────────────────────────────────────────────────
+    restart: unless-stopped
+
+    # ── Resource limits (optional — adjust to your machine) ───────────────────
+    # Whisper "small" model needs ~1–2 GB RAM on CPU
+    deploy:
+      resources:
+        limits:
+          memory: 4g      # cap at 4 GB RAM
+        reservations:
+          memory: 1g      # reserve at least 1 GB
+
+    # ── Healthcheck ───────────────────────────────────────────────────────────
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s   # give Whisper model time to load on first start
+
+# ── Named volumes ────────────────────────────────────────────────────────────────
+volumes:
+  ai_downloads:
+    driver: local
+  ai_vector_db:
+    driver: local

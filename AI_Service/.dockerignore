@@ -1,0 +1,39 @@
+# ── .dockerignore — AI_Service ────────────────────────────────────────────────
+# Prevents unnecessary files from being sent to the Docker build context,
+# keeping image builds fast and lean.
+
+# Python cache / compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environment — never copy into image (dependencies installed fresh)
+.venv/
+venv/
+env/
+ENV/
+
+# Environment file — NEVER bake secrets into the image
+.env
+
+# Runtime-generated data — these are mounted as Docker volumes
+downloads/
+vector_db/
+
+# Version control
+.git/
+.gitignore
+
+# Editor / IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Docs / misc
+*.md
+runtime.txt
